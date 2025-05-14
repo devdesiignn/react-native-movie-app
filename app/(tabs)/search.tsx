@@ -7,6 +7,7 @@ import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { useFetch } from "@/hooks/useFetch";
+import { DEBOUNCE_TIME } from "@/constants/data";
 import { fetchMovies } from "@/services/api";
 import { updateSearchCount } from "@/services/appwrite";
 
@@ -29,7 +30,7 @@ const Search = () => {
         if (movies && movies.length > 0 && movies[0])
           await updateSearchCount(searchQuery, movies[0]);
       } else resetMovies();
-    }, 500);
+    }, DEBOUNCE_TIME);
 
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
