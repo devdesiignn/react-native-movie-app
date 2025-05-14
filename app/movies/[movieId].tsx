@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { icons } from "@/constants/icons";
 import { useFetch } from "@/hooks/useFetch";
@@ -27,6 +27,14 @@ const MovieDetails = () => {
     loading: movieLoading,
     error: movieError,
   } = useFetch(() => fetchMovieDetails(movieId as string));
+
+  const handleBack = () => {
+    if (Platform.OS === "web") {
+      router.push("/");
+    } else {
+      router.back();
+    }
+  };
 
   return (
     <View className="bg-primary flex-1">
@@ -95,7 +103,7 @@ const MovieDetails = () => {
 
       <TouchableOpacity
         className="absolute bottom-10 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
-        onPress={router.back}
+        onPress={handleBack}
       >
         <Image source={icons.arrow} className="size-5 mr-1 mt-0.5 rotate-180" tintColor="#fff" />
         <Text className="text-white font-semibold text-base">Go Back</Text>
